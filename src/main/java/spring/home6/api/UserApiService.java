@@ -2,6 +2,7 @@ package spring.home6.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import spring.home6.Exceptions.EntityNotFoundException;
 import spring.home6.repositories.UserRepository;
 import spring.home6.user.User;
 
@@ -23,13 +24,14 @@ public class UserApiService {
     }
 
     public User getUserById(Long id){
-        return userRepository.findById(id).orElseThrow(()-> new RuntimeException("User not found"));
+        return userRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("User not found: " + id));
     }
     public User updateUser(Long id,User user){
         User currentUser = getUserById(id);
         currentUser.setEmail(user.getEmail());
         currentUser.setName(user.getName());
         currentUser.setTask(user.getTask());
+        userRepository.save(currentUser);
         return currentUser;
     }
     public void deleteUserById(Long id){

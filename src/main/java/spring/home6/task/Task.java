@@ -20,21 +20,19 @@ public class Task {
     @Column(nullable = false)
     private String description;
 
-    @Column(name = "Date_Start",nullable = false)
+    @Column(name = "Date_Start", nullable = false)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date date;
     @Enumerated(EnumType.STRING)
-    @Column(name= "Status_at_now")
+    @Column(name = "Status_at_now")
     private Status status;
 
 
-
-    @OneToMany(mappedBy = "task",cascade = CascadeType.ALL)
-   private List<User> userList = new ArrayList<>();
-
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    private List<User> userList = new ArrayList<>();
 
     @PrePersist
-    private void onCreate(){
+    private void onCreate() {
         date = new Date(new java.util.Date().getTime());
         status = Status.NOT_STARTED;
     }
@@ -47,6 +45,18 @@ public class Task {
 
     public Task() {
     }
+
+    public boolean addUserToTask(User user) {
+        for (User u : userList) {
+            if (u.getId().equals(user.getId())) {
+                return false;
+            }
+        }
+        userList.add(user);
+        return true;
+    }
+
+
 
     // region getters and setters
     public Long getId() {
@@ -88,6 +98,7 @@ public class Task {
     public void setStatus(Status status) {
         this.status = status;
     }
+
     public List<User> getUserList() {
         return userList;
     }

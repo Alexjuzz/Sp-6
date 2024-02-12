@@ -6,4 +6,5 @@ import spring.home6.user.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+
 }
