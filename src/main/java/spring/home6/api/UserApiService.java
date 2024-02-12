@@ -2,7 +2,7 @@ package spring.home6.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import spring.home6.Exceptions.EntityNotFoundException;
+import spring.home6.exceptions.EntityNotFoundException;
 import spring.home6.repositories.UserRepository;
 import spring.home6.user.User;
 

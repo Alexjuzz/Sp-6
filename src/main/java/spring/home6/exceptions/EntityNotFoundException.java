@@ -1,4 +1,4 @@
-package spring.home6.Exceptions;
+package spring.home6.exceptions;
 
 public class EntityNotFoundException extends RuntimeException{
     public EntityNotFoundException(String message){

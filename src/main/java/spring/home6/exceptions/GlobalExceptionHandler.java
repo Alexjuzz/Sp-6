@@ -1,4 +1,4 @@
-package spring.home6.Exceptions;
+package spring.home6.exceptions;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
