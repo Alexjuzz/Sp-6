@@ -5,52 +5,66 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spring.home6.task.Task;
+import spring.home6.task.TaskDto;
 import spring.home6.user.User;
 
+
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/task")
 public class TaskApiController {
 
 
-        private final TaskApiService taslApiservice;
-        private final UserApiService userApiService;
+    private final TaskApiService taskApiService;
+    private final UserApiService userApiService;
 
-        @Autowired
-        public TaskApiController(TaskApiService apiService,UserApiService userApiService){
-            this.taslApiservice = apiService;
-            this.userApiService = userApiService;
+    @Autowired
+    public TaskApiController(TaskApiService apiService, UserApiService userApiService) {
+        this.taskApiService = apiService;
+        this.userApiService = userApiService;
+    }
+
+    @GetMapping(value = "/all")
+    public List<Task> getAllTask() {
+        return taskApiService.getAllTask();
+    }
+
+    @GetMapping(value = "/{id}")
+    public TaskDto getTaskById(@PathVariable Long id) {
+        return taskApiService.getTaskById(id);
+    }
+
+    @PostMapping(value = "/")
+    public TaskDto createTask(@RequestBody TaskDto task) {
+        return taskApiService.createTask(task);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public void deleteTask(@PathVariable Long id) {
+        taskApiService.deleteTask(id);
+    }
+
+    @PutMapping(value = "/{id}")
+    public TaskDto updateTask(@PathVariable Long id, @RequestBody TaskDto task) {
+        return taskApiService.updateTask(id, task);
+    }
+
+    @PostMapping("/{task_id}/user/{user_id}")
+    public ResponseEntity<?> addUserToTask(@PathVariable Long task_id, @PathVariable Long user_id) {
+        if(userApiService.getUserById(user_id) == null){
+            return new ResponseEntity<>("User or user not found", HttpStatus.NOT_FOUND);
+        }
+        if (taskApiService.getTaskById(task_id) == null) {
+            return new ResponseEntity<>("Task or user not found", HttpStatus.NOT_FOUND);
         }
 
-        @GetMapping(value = "/all")
 
-        public List<Task> getAllTask() {
-            return taslApiservice.getAllTask();
-        }
-        @PostMapping
-        public Task createTask(@RequestBody Task task){
-          return   taslApiservice.createTask(task);
-        }
+        taskApiService.addUser(task_id,user_id);
 
-        @DeleteMapping("/id")
-        public void deleteTask(@PathVariable Long id){
-            taslApiservice.deleteTask(id);
-        }
 
-        @PutMapping("/id")
-        public Task updateTask(@PathVariable Long id,@RequestBody Task task){
-            return taslApiservice.updateTask(id,task);
-        }
-
-        @PutMapping("/task/{task_id}/user/{user_id}")
-        public ResponseEntity<Task> addUserToTask(@PathVariable Long task_id, @PathVariable Long user_id){
-            if(taslApiservice.addUserToTaskByUserId(task_id,user_id)){
-                return new ResponseEntity<>(taslApiservice.getTaskById(task_id), HttpStatus.OK);
-            }else {
-                return ResponseEntity.notFound().build();
-            }
-
-        }
-
+        return new ResponseEntity<>(taskApiService.getTaskById(task_id), HttpStatus.OK);
+    }
 }
+

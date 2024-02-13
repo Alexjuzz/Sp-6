@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Выбраная задача для редактирования</title>
+</head>
+<body>
+<h1>Редактировать задачу:</h1>
+<form action="#" th:action="@{/updateTask}" th:object="${task}" method="POST">
+    <p>ID: <input type="text" name="id" th:value="${task.id}" readonly/></p>
+
+    <p>Название: <input type="text" name="name" th:value="${task.name}"/></p>
+    <p>Описание: <input type="text" name="description" th:value="${task.description}"/></p>
+    <p>Статус:
+        <select name="status">
+            <option value="NOT_STARTED" th:selected="${task.status == 'NOT_STARTED'}">Новая</option>
+            <option value="IN_PROGRESS" th:selected="${task.status == 'IN_PROGRESS'}">В процессе</option>
+            <option value="COMPLETED" th:selected="${task.status == 'COMPLETED'}">Завершена</option>
+        </select>
+    </p>
+    <input type="submit" value="Сохранить изменения"/>
+</form>
+
+
+</body>
+</html>

@@ -17,7 +17,12 @@ public class UserApiController {
         this.service = service;
     }
 
-    @PostMapping
+    @GetMapping(value = "/{id}")
+    public User getUserById(@PathVariable Long id){
+        return service.getUserById(id);
+    }
+
+    @PostMapping(value = "/")
     public User createUser(@RequestBody User user){
         return service.createUser(user);
     }

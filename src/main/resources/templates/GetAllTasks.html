@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Задачи</title>
+    <style>
+        .link-container {
+            display: centre;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .link-container a {
+            margin-right: 33px;
+        }
+    </style>
+</head>
+<body>
+<h1>Список всех задач:</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Discription</th>
+        <th>Status</th>
+        <th>Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.id}">ID</td>
+        <td th:text="${task.name}">Name</td>
+        <td th:text="${task.description}">Discription</td>
+        <td th:text="${task.status}">Status</td>
+        <td th:text="${task.date}">Date</td>
+    </tr>
+    </tbody>
+
+</table>
+<table>
+    <div class="link-container">
+        <a href="/create">Создать новую запись</a>
+        <form action="/editTask" method="post">
+            <p>Введите ID задачи для редактирования <input type="text" name="id" th:value="*{id}"/>  <input type="submit" value="Выбрать"/></p>
+        </form>
+        <form action="/delTask" method="post">
+            <p>Введите ID задачи для удаления <input type="text" name="id" th:value="*{id}"/>  <input type="submit" value="Выбрать"/></p>
+        </form>
+    </div>
+</table>
+</body>
+</html>

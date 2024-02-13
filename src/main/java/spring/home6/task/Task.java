@@ -1,15 +1,17 @@
 package spring.home6.task;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import spring.home6.user.User;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "Tasks")
+@Table(name = "tasks")
 public class Task {
 
     @Id
@@ -22,18 +24,20 @@ public class Task {
 
     @Column(name = "Date_Start", nullable = false)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private Date date;
+    private LocalDate date;
     @Enumerated(EnumType.STRING)
     @Column(name = "Status_at_now")
     private Status status;
 
 
-    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<User> userList = new ArrayList<>();
+
 
     @PrePersist
     private void onCreate() {
-        date = new Date(new java.util.Date().getTime());
+        date = LocalDate.now();
         status = Status.NOT_STARTED;
     }
 
@@ -46,15 +50,15 @@ public class Task {
     public Task() {
     }
 
-    public boolean addUserToTask(User user) {
-        for (User u : userList) {
-            if (u.getId().equals(user.getId())) {
-                return false;
-            }
-        }
+    public void addUser(User user){
         userList.add(user);
-        return true;
+        user.setTask(this);
     }
+    public void removeUser(User user){
+        userList.remove(user);
+        user.setTask(null);
+    }
+
 
 
 
@@ -83,11 +87,11 @@ public class Task {
         this.description = description;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -103,9 +107,6 @@ public class Task {
         return userList;
     }
 
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
-    }
     //endregion
 
 
