@@ -32,8 +32,9 @@ public class Task {
 
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    @Column(name = "users")
+
     private List<User> userList = new ArrayList<>();
+
 
 
     @PrePersist

@@ -3,6 +3,7 @@ package spring.home6.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import spring.home6.user.User;
+import spring.home6.user.UserDto;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class UserApiController {
     }
 
     @PostMapping(value = "/")
-    public User createUser(@RequestBody User user){
+    public UserDto createUser(@RequestBody UserDto user){
         return service.createUser(user);
     }
     @GetMapping(value = "/all")
