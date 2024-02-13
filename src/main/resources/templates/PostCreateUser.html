@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Пользователь добавлен</title>
+</head>
+<body>
+<h1>Пользователь:</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${user.id}">ID </td>
+        <td th:text="${user.name}">Name</td>
+        <td th:text="${user.email}">Email</td>
+        <td><a href="/createUser">Добавить ещё пользователя.</a></td>
+
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

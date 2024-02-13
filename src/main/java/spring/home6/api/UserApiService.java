@@ -60,7 +60,7 @@ public class UserApiService {
         return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found: " + id));
     }
 
-    public User updateUser(Long id, User user) {
+    public User updateUser(Long id, @NotNull User user) {
         User currentUser = getUserById(id);
         currentUser.setEmail(user.getEmail());
         currentUser.setName(user.getName());

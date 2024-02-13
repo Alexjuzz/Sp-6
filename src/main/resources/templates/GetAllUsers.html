@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Пользователи: </title>
+    <style>
+        .link-container {
+            display: centre;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .link-container a {
+            margin-right: 33px;
+        }
+    </style>
+</head>
+<body>
+<h1>Список всех пользователей:</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}">ID</td>
+        <td th:text="${user.name}">Name</td>
+        <td th:text="${user.email}">Email</td>
+    </tr>
+    </tbody>
+
+</table>
+<table>
+    <div class="link-container">
+        <a href="/create">Добавить пользователя</a>
+        <form action="/editUser" method="post">
+            <p>Введите ID пользователя для редактирования <input type="text" name="id" th:value="*{id}"/>  <input type="submit" value="Выбрать"/></p>
+        </form>
+        <form action="/delUser" method="post">
+            <p>Введите ID задачи для удаления <input type="text" name="id" th:value="*{id}"/>  <input type="submit" value="Выбрать"/></p>
+        </form>
+    </div>
+</table>
+</body>
+</html>
