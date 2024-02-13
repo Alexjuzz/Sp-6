@@ -90,8 +90,7 @@ public class TaskApiService {
     }
 
     public TaskDto addUser(Long task_id, Long user_id) {
-
-        Task task = convertToEntity(getTaskById(task_id));
+        Task task = taskRepository.getById(task_id);
         task.addUser(userApiService.getUserById(user_id));
         taskRepository.save(task);
         return convertToDto(task);

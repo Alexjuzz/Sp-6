@@ -59,11 +59,7 @@ public class TaskApiController {
         if (taskApiService.getTaskById(task_id) == null) {
             return new ResponseEntity<>("Task or user not found", HttpStatus.NOT_FOUND);
         }
-
-
         taskApiService.addUser(task_id,user_id);
-
-
         return new ResponseEntity<>(taskApiService.getTaskById(task_id), HttpStatus.OK);
     }
 }
