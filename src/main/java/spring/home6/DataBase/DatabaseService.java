@@ -1,4 +1,4 @@
-package spring.home6;
+package spring.home6.DataBase;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
